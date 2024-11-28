@@ -1,0 +1,51 @@
+<!-- add_admission.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Admission Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="min-h-screen bg-zinc-100 text-zinc-900 p-4 flex justify-center items-center" style="background-image: url('/static/images/edit3.png');">
+        <div class="w-full max-w-lg bg-white rounded-lg shadow p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-black">Add Admission Details</h2>
+                <a href="{{ url_for('view_patient', patient_id=patient_id) }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                    Back
+                </a>
+            </div>
+            <form method="POST">
+                <div class="mb-4">
+                    <label for="admission_date" class="block text-sm font-medium text-zinc-600">Admission Date</label>
+                    <input type="date" id="admission_date" name="admission_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                </div>
+                <div class="mb-4">
+                    <label for="discharge_date" class="block text-sm font-medium text-zinc-600">Discharge Date</label>
+                    <input type="date" id="discharge_date" name="discharge_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                </div>
+                <div class="mb-6">
+                    <label for="room_number" class="block text-sm font-medium text-zinc-600">Room Number</label>
+                    <input type="text" id="room_number" name="room_number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                </div>
+                <div class="mb-6">
+                    <label for="doctor_assigned" class="block text-sm font-medium text-zinc-600">Doctor Assigned</label>
+                    <select id="doctor_assigned" name="doctor_assigned" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                        <option value="">Select Doctor</option>
+                        {% for doctor in doctors %}
+                            <option value="{{ doctor['doctor_id'] }}">{{ doctor['name'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded cursor-pointer">Add Admission Details</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

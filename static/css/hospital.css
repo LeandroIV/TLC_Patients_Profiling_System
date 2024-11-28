@@ -1,0 +1,91 @@
+/* hospital.css */
+
+/* Base styles for sidebar */
+.sidebar {
+    transition: transform 0.3s ease;
+}
+
+/* Sidebar background */
+.sidebar-bg {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Initially hide sidebar off-screen */
+    width: 260px; /* Sidebar width */
+    height: 100vh;
+    background: linear-gradient(to bottom, #38b2ac, #4299e1);
+    overflow-y: auto; /* Allow vertical scrolling */
+    z-index: 10;
+    transition: left 0.3s ease;
+}
+.sidebar-open {
+    left: 0;
+}
+
+
+/* Mobile view adjustments */
+@media (max-width: 768px) {
+    /* Ensure the sidebar takes full height of viewport */
+    .sidebar-bg {
+        position: fixed;
+        top: 0;
+        left: -100%; /* Initially hide sidebar off-screen */
+        width: 260px; /* Sidebar width */
+        height: 100vh;
+        background: linear-gradient(to bottom, #38b2ac, #4299e1);
+        overflow-y: auto; /* Allow vertical scrolling */
+        z-index: 10;
+        transition: left 0.3s ease;
+    }
+    
+    .sidebar-open {
+        left: 0; /* Show sidebar */
+    }
+    
+    /* Adjustments for the mobile sidebar content */
+    .mobile-sidebar {
+        padding: 20px;
+        height: 100%; /* Ensure the sidebar fills the height */
+        overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
+        scroll-behavior: smooth;
+    }
+
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        z-index: 9; /* Just below the sidebar */
+        display: none; /* Hidden by default */
+        transition: opacity 0.3s ease;
+    }
+    
+    .sidebar-open ~ .sidebar-overlay {
+        display: block;
+        opacity: 1;
+    }
+
+    .mobile-sidebar .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .mobile-sidebar a,
+    .mobile-sidebar button {
+        color: #fff;
+        text-decoration: none;
+        margin-bottom: 15px;
+        display: block;
+    }
+    .mobile-sidebar a:hover,
+    .mobile-sidebar button:hover {
+        text-decoration: underline;
+    }
+}
+

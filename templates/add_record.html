@@ -1,0 +1,43 @@
+<!-- add_record.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Record</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="min-h-screen bg-zinc-100 text-zinc-900 black:text-zinc-100 p-4 flex justify-center items-center" style="background-image: url('/static/images/edit3.png');">
+        <div class="w-full max-w-lg bg-white rounded-lg shadow p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold">Add Record</h2>
+                <a href="{{ url_for('view_patient', patient_id=patient_id) }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                    Back
+                </a>
+            </div>
+            <form action="{{ url_for('processrecord', patient_id=patient_id) }}" method="post">
+                <input type="hidden" name="patient_id" value="{{ patient_id }}">
+                <div class="mb-4">
+                    <label for="diagnosis" class="block text-sm font-medium text-zinc-600 black:text-zinc-400">Diagnosis</label>
+                    <input type="text" name="diagnosis" id="diagnosis" class="mt-1 block w-full rounded-md border-gray-300 shadow-lg focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:border-gray-600 dark:placeholder-gray-400 " required>
+                </div>
+                <div class="mb-4">
+                    <label for="treatment_plan" class="block text-sm font-medium text-zinc-600 ">Treatment Plan</label>
+                    <input type="text" name="treatment_plan" id="treatment_plan" class="mt-1 block w-full rounded-md border-gray-300 shadow-lg focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:border-gray-600 dark:placeholder-gray-400 " required>
+                </div>
+                <div class="mb-6">
+                    <label for="date_of_visit" class="block text-sm font-medium text-zinc-600 ">Date of Visit</label>
+                    <input type="date" name="date_of_visit" id="date_of_visit" class="mt-1 block w-full rounded-md border-gray-300 shadow-lg focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:border-gray-600 dark:placeholder-gray-400 " required>
+                </div>
+                <div class="flex justify-end">
+                    <input type="submit" class="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded cursor-pointer" name="submit" value="Add Record">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

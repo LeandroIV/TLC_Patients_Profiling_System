@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADET Final Project</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Include Custom CSS -->
+    <link href="../static/css/hospital.css" rel="stylesheet">
+</head>
+<body class="relative min-h-screen bg-cover bg-center bg-no-repeat" style="background-image: url('/static/images/Index.png');">
+
+    <div class="min-h-screen bg-zinc-100 text-zinc-900 dark:text-zinc-100">
+        <div class="flex">
+            <!-- Sidebar -->
+            <aside class="w-1/6 bg-gradient-to-b from-teal-400 to-blue-500 text-white p-4">
+                <!-- Back to Patient List Button -->
+                <a href="/home" class="block bg-teal-500 text-white py-2 mb-4 rounded text-center hover:bg-teal-600">Back to Patient List</a>
+                <!-- Other Links -->
+                <a href="/view_doctors" class="block bg-teal-500 text-white py-2 mb-4 rounded text-center hover:bg-teal-600">TLC Hospital Doctors</a>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="w-5/6 p-4" style="background-image: url('/static/images/Index.png');">
+                <!-- Flash Messages -->
+                {% for message in get_flashed_messages() %}
+                <div class="bg-green-500 text-white p-3 rounded mb-4">
+                    {{ message }}
+                </div>
+                {% endfor %}
+
+                <!-- Patient Information -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="w-full p-4 bg-gradient-to-r from-teal-400 to-blue-500 rounded shadow flex flex-col items-center">
+                        <img src="../static/images/def_pic.png"
+                                class="w-48 h-48 mb-4">
+                        <h2 class="text-center text-xl font-bold text-black">{{ patient.name }}</h2>
+                        <p class="text-center text-black">Patient ID: {{ patient.id }}</p>
+                        <div class="mt-4">
+                            <label for="patient-picture" class="text-black block text-sm font-medium text-black">Upload Picture</label>
+                            <input type="file" id="patient-picture" name="patient-picture" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                        </div>
+                    </div>
+                    
+
+                    <div class="bg-gradient-to-r from-blue-500 to-teal-400 p-4 rounded shadow">
+                        <h2 class="text-center text-black text-xl font-bold mb-4">Information</h2>
+                        <p class="text-center text-black dark:text-black"><strong>Name:</strong> {{ patient.name }}</p>
+                        <p class="text-center text-black dark:text-black"><strong>Email:</strong> {{ patient.email }}</p>
+                        <p class="text-center text-black dark:text-black"><strong>Phone:</strong> {{ patient.phone }}</p>
+                        <p class="text-center text-black dark:text-black"><strong>Address:</strong> {{ patient.address }}</p>
+                        <p class="text-center text-black dark:text-black"><strong>Weight:</strong> {{ patient.weight }}</p>
+                        <p class="text-center text-black dark:text-black"><strong>Height:</strong> {{ patient.height }}</p>
+                        <p class="text-center text-black dark:text-black"><strong>Blood Type:</strong> {{ patient.blood_type }}</p>
+                    </div>
+                    
+                </div>
+
+                <!-- Records Section -->
+                <div class="bg-teal-400 p-4 rounded shadow mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h1 class="text-2xl font-bold text-black">Patient Report</h1>
+                        <a href="{{ url_for('processrecord', patient_id=patient.id) }}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+                            Add Record
+                        </a>
+                    </div>
+                    <h2 class="text-xl font-bold mb-4 text-black" >Records</h2>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full table-auto">
+                            <thead>
+                                <tr>
+                                    <th class="px-4 py-2 text-center bg-blue-500 text-black">Diagnosis</th>
+                                    <th class="px-4 py-2 text-center bg-blue-500 text-black">Treatment Plan</th>
+                                    <th class="px-4 py-2 text-center bg-blue-500 text-black">Date of Visit</th>
+                                    <th class="px-4 py-2 text-center bg-blue-500 text-black">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for record in records %}
+                                <tr>
+                                    <td class="text-black px-4 py-2 text-center">{{ record.diagnosis }}</td>
+                                    <td class="text-black px-4 py-2 text-center">{{ record.treatment_plan }}</td>
+                                    <td class="text-black px-4 py-2 text-center">{{ record.date_of_visit }}</td>
+                                    <td class="text-black px-4 py-2 text-center">
+                                        <a href="{{ url_for('edit_record', record_id=record.record_id) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-2 rounded mr-2">
+                                            Edit
+                                        </a>
+                                        <a href="{{ url_for('delete_record', record_id=record.record_id, patient_id=patient.id) }}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded" onclick="return confirm('Are you sure you want to delete this record?')">
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Admission Details Section -->
+                <div class="bg-teal-400 p-4 rounded shadow " >
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-bold mb-4 text-black">Admission Details</h2>
+                        <a href="{{ url_for('add_admission', patient_id=patient.id) }}" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded pull-right">
+                            Add Admission Details
+                        </a>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full table-auto">
+                            <thead>
+                                <tr>
+                                    <th class="px-4 py-2 text-center bg-blue-500 text-black">Admission Date</th>
+                                    <th class="px-4 py-2 text-center bg-blue-500 text-black">Discharge Date</th>
+                                    <th class="px-4 py-2 text-center bg-blue-500 text-black">Room Number</th>
+                                    <th class="px-4 py-2 text-center bg-blue-500 text-black">Doctor Assigned</th>
+                                    <th class="px-4 py-2 text-center bg-blue-500 text-black">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for admission in admissions %}
+                                <tr>
+                                    <td class="px-4 py-2 text-center text-black">{{ admission.admission_date }}</td>
+                                    <td class="px-4 py-2 text-center text-black">{{ admission.discharge_date }}</td>
+                                    <td class="px-4 py-2 text-center text-black">{{ admission.room_number }}</td>
+                                    <td class="px-4 py-2 text-center text-black">{{ admission.doctor_name }}</td>
+                                    <td class="px-4 py-2 text-center text-black">
+                                        <a href="{{ url_for('edit_admission', admission_id=admission.admission_id) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-2 rounded mr-2">
+                                            Edit
+                                        </a>
+                                        <a href="{{ url_for('delete_admission', admission_id=admission.admission_id, patient_id=patient.id) }}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded" onclick="return confirm('Are you sure you want to delete this admission detail?')">
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</body>
+</html>

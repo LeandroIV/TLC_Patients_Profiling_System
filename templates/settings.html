@@ -1,0 +1,82 @@
+<!-- templates/settings.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Include any additional stylesheets or scripts here -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .background-image {
+            position: fixed;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            right: 200px;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen bg-cover bg-center bg-no-repeat" style="background-image: url('../static/images/edit.png');">
+    
+        <div class="container mx-auto p-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-gray-800">Settings</h2>
+                <a href="{{ url_for('Index') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                    Back
+                </a>
+            </div>
+            
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="mb-4">
+                {% for message in messages %}
+                <div class="alert alert-{{ message[1] }}">
+                    {{ message[0] }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+            
+            <form action="{{ url_for('settings') }}" method="POST" enctype="multipart/form-data">
+                <div class="mb-4">
+                    <label for="profile_picture" class="block text-gray-700 font-bold mb-2">Upload Picture:</label>
+                    <input type="file" id="profile_picture" name="profile_picture" class="shadow border rounded w-full py-2 px-3 text-gray-700">
+                </div>
+                <div class="mb-4">
+                    <label for="first_name" class="block text-gray-700 font-bold mb-2">First Name:</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" class="shadow border rounded w-full py-2 px-3 text-gray-700">
+                </div>
+                <div class="mb-4">
+                    <label for="last_name" class="block text-gray-700 font-bold mb-2">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" class="shadow border rounded w-full py-2 px-3 text-gray-700">
+                </div>
+                <div class="mb-4">
+                    <label for="username" class="block text-gray-700 font-bold mb-2">Username:</label>
+                    <input type="text" id="username" name="username" value="{{ user.username }}" class="shadow border rounded w-full py-2 px-3 text-gray-700">
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="block text-gray-700 font-bold mb-2">Password:</label>
+                    <input type="password" id="password" name="password" class="shadow border rounded w-full py-2 px-3 text-gray-700">
+                </div>
+                <div class="mb-4">
+                    <label for="confirm_password" class="block text-gray-700 font-bold mb-2">Confirm Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" class="shadow border rounded w-full py-2 px-3 text-gray-700">
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Include footer.html -->
+    {% include "footer.html" %}
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+    <div class="absolute inset-0 z-0 bg-cover bg-center"
+        style="background-image: url('../static/images/bkg_login.png');">
+    </div>
+
+    <div class="flex justify-center items-center min-h-screen">
+        <div class="w-full max-w-xl bg-white rounded-xl shadow-lg p-8 flex flex-col md:flex-row items-center md:mt-0 relative z-10">
+            <div class="flex justify-between items-center w-full md:w-2/3 lg:w-1 xl:w-2/3 mb-8 md:mb-0">
+                <h2 class="text-2xl font-bold mb-6 md:mb-0">Sign in</h2>
+                <img src="../static/images/TLC_logo.png" alt="user"
+                    class="w-24 h-24 object-contain md:w-32 md:h-32 lg:w-40 lg:h-40 mr-4" />
+            </div>
+            <div class="w-full md:w-2/3 lg:w-1/2 xl:w-2/3">
+                <form action="{{ url_for('login') }}" method="POST" class="space-y-4">
+                    <!-- Flash Messages -->
+                    {% for message in get_flashed_messages() %}
+                    <div class="bg-blue-500 text-white p-3 rounded mb-4">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    <!-- End Flash Messages -->
+                    <div class="mb-4">
+                        <label for="username" class="block text-gray-700 font-bold mb-2">Username</label>
+                        <input id="username" name="username" type="text" placeholder="Enter your username"
+                            class="w-full p-3 border border-zinc-300 rounded-md">
+                    </div>
+                    <div class="mb-4">
+                        <label for="password" class="block text-gray-700 font-bold mb-2">Password</label>
+                        <input id="password" name="password" type="password" placeholder="Enter your password"
+                            class="w-full p-3 border border-zinc-300 rounded-md">
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700">Login</button>
+                    <div class="text-center mt-4">
+                        <a href="{{ url_for('signup') }}" class="text-blue-600">Don't have an account? Sign
+                            Up</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

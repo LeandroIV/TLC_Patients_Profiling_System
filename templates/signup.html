@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-zinc-100">
+    <div class="absolute inset-0 z-[-1] bg-cover bg-center"
+        style="background-image: url('../static/images/bkg_login.png');">
+    </div>
+
+    <div class="flex justify-center items-center min-h-screen p-4">
+        <div class="w-full max-w-lg bg-white rounded-xl shadow-lg p-6 sm:p-8 flex flex-col sm:flex-row items-center">
+            <img src="../static/images/TLC_logo.png" alt="user"
+                class="w-48 h-48 sm:w-48 sm:h-48 mb-4 sm:mb-0 sm:mr-4" />
+            <div class="w-full">
+                <div class="flex justify-end mb-4">
+                    <a href="{{ url_for('login') }}" class="text-blue-600">I already have an account <span
+                            class="font-semibold">Sign In</span></a>
+                </div>
+                <h2 class="text-2xl font-bold mb-6">Sign Up</h2>
+                <form action="{{ url_for('register') }}" method="POST" class="space-y-4">
+                    <!-- Flash Messages -->
+                    {% for message in get_flashed_messages() %}
+                    <div class="bg-blue-500 text-white p-3 rounded mb-4">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    <!-- End Flash Messages -->
+                    <input type="text" name="first_name" placeholder="First Name"
+                        class="w-full p-3 border border-zinc-300 rounded-md">
+                    <input type="text" name="last_name" placeholder="Last Name"
+                        class="w-full p-3 border border-zinc-300 rounded-md">
+                    <input type="email" name="email" placeholder="Email"
+                        class="w-full p-3 border border-zinc-300 rounded-md">
+                    <input type="text" name="username" placeholder="Username"
+                        class="w-full p-3 border border-zinc-300 rounded-md">
+                    <input type="password" name="password" placeholder="Password"
+                        class="w-full p-3 border border-zinc-300 rounded-md">
+                    <button type="submit"
+                        class="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700">Create
+                        Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
